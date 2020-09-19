@@ -15,7 +15,12 @@ import { MainTitle, SimpleText } from "./components/titles"
 import { BigCard, SmallCard } from "./components/cards"
 
 import { BIG_CARD_FIRST_COLUMN } from "./constants/firstColumns"
-import { useAvgAgeData, useFetchData, useRunningAvgData, useRunningTotalData } from "./hooks"
+import {
+  useAvgAgeData,
+  useFetchData,
+  useRunningAvgData,
+  useRunningTotalData,
+} from "./hooks"
 
 import { colors, breakpoints } from "./styles/theme"
 import { normalTextStyle } from "./styles/styles"
@@ -96,7 +101,7 @@ const App = () => {
         >
           <ColumnContainer>
             <BigCard
-              title="Elhunytak száma naponta (7 napos mozgóátlag)"
+              title="Elhunytak száma naponta március 20. óta (7 napos mozgóátlag)"
               columns={[
                 {
                   rows: BIG_CARD_FIRST_COLUMN,
@@ -108,7 +113,7 @@ const App = () => {
               chartData={runningAvgData}
             />
             <BigCard
-              title="Elhunytak száma összesen (kumulatív)"
+              title="Elhunytak száma összesen március 20. óta (kumulatív) "
               columns={[
                 {
                   rows: BIG_CARD_FIRST_COLUMN,

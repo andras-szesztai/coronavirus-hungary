@@ -12,14 +12,9 @@ export const cardStyle = css`
   grid-template-rows: min-content 1fr;
   grid-row-gap: 16px;
 
-  @media (max-width: ${breakpoints.md}) {
+  @media (max-width: ${breakpoints.sm}) {
     padding: 12px;
     grid-row-gap: 12px;
-  }
-
-  @media (max-width: ${breakpoints.sm}) {
-    padding: 8px;
-    grid-row-gap: 8px;
   }
 `
 
