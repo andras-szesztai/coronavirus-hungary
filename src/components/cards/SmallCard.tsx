@@ -11,9 +11,15 @@ interface Props {
   title: string
   withMargin?: boolean
   isLoading: boolean
+  handleClick: () => void
 }
 
-const SmallCard: React.FC<Props> = ({ title, children, isLoading }) => {
+const SmallCard: React.FC<Props> = ({
+  title,
+  children,
+  isLoading,
+  handleClick,
+}) => {
   return (
     <div
       css={css`
@@ -25,7 +31,7 @@ const SmallCard: React.FC<Props> = ({ title, children, isLoading }) => {
       `}
     >
       <LoadingAnimation isLoading={isLoading} />
-      <CardTitle title={title} />
+      <CardTitle handleClick={handleClick} title={title} />
       {children}
     </div>
   )

@@ -10,7 +10,7 @@ import { axisRight } from "d3-axis"
 import { format } from "d3-format"
 import { select } from "d3-selection"
 
-import { colors } from "../../styles/theme"
+import { breakpoints, colors, fontSize, fontWeight } from "../../styles/theme"
 
 const marginTop = 5
 
@@ -55,6 +55,7 @@ function AreaChart({ data }) {
         .call((g) => {
           g.select(".domain").remove()
           g.selectAll(".tick line").remove()
+          g.selectAll("text")
         })
       select(gridRef.current)
         .call(
@@ -87,13 +88,22 @@ function AreaChart({ data }) {
           position: absolute;
           width: 100%;
           height: 100%;
+
+          text {
+            font-family: "Raleway", sans-serif;
+            font-size: "Raleway", sans-serif;
+
+            font-weight: ${fontWeight.md};
+            font-size: ${fontSize.xs.primary};
+            color: ${colors.dark.primary};
+
+            @media (max-width: ${breakpoints.sm}) {
+              font-size: ${fontSize.xs.secondary};
+            }
+          }
         `}
       >
-        <path
-          d={path}
-          fill={colors.dark.primary}
-          fillOpacity={0.8}
-        />
+        <path d={path} fill={colors.dark.primary} fillOpacity={0.9} />
         <g
           ref={axisRef}
           css={css`

@@ -1,6 +1,8 @@
 import React from "react"
 import { css } from "@emotion/core"
 import moment from "moment"
+import Modal from "react-modal"
+import chroma from "chroma-js"
 
 import {
   DashboardContainer,
@@ -29,17 +31,55 @@ import {
 import { colors, breakpoints } from "./styles/theme"
 import { normalTextStyle } from "./styles/styles"
 import { Column } from "./types/Columns"
+import { EXPLAIN } from "./constants/text"
 
 const App = () => {
-  const { data, maxDate, error, isLoading } = useFetchData()
+  const { data, maxDate, isLoading } = useFetchData()
 
   const avgAgeColumns = useAvgAgeData(data, maxDate)
   const ratioRows = useGenderRatioData(data, maxDate)
   const { runningAvgData, runningAvgRows } = useRunningAvgData(data)
   const { runningTotalData, runningTotalRows } = useRunningTotalData(data)
 
+  const [isModal, setIsModal] = React.useState("")
+
+  const modalStyle = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+    },
+    overlay: {
+      zIndex: 110,
+      cursor: "pointer",
+      backgroundColor: chroma(colors.dark.primary).alpha(0.8).hex(),
+    },
+  }
+
+  console.log("App -> isModal", isModal)
   return (
     <MainContainer>
+      {isModal && (
+        <Modal
+          isOpen={!!isModal}
+          style={modalStyle}
+          onRequestClose={() => setIsModal("")}
+          contentLabel="Example Modal"
+        >
+          <div
+            css={css`
+              color: ${colors.dark.primary};
+              max-width: 200px;
+              line-height: 1.75;
+            `}
+          >
+            <SimpleText text={EXPLAIN[isModal].hu} />
+          </div>
+        </Modal>
+      )}
       <DashboardContainer>
         <TitleContainer>
           <MainTitle />
@@ -117,6 +157,7 @@ const App = () => {
               ]}
               chartData={runningAvgData}
               isLoading={isLoading}
+              handleClick={() => setIsModal("cumulative")}
             />
             <BigCard
               title="Elhunytak száma összesen március 20. óta (kumulatív) "
@@ -130,10 +171,15 @@ const App = () => {
               ]}
               chartData={runningTotalData}
               isLoading={isLoading}
+              handleClick={() => setIsModal("daily")}
             />
           </ColumnContainer>
           <ColumnContainer>
-            <SmallCard isLoading={isLoading} title="Elhunytak átlagéletkora">
+            <SmallCard
+              isLoading={isLoading}
+              title="Elhunytak átlagéletkora"
+              handleClick={() => setIsModal("age")}
+            >
               <TableContainer columns={4}>
                 {avgAgeColumns.map((column: Column, i) => (
                   <TableColumnContainer key={i}>
@@ -154,6 +200,7 @@ const App = () => {
             <SmallCard
               isLoading={isLoading}
               title="Nemek százalékos megoszlása"
+              handleClick={() => setIsModal("ratio")}
             >
               <div
                 css={css`

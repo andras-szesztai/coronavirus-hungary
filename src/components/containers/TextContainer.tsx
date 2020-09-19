@@ -7,6 +7,7 @@ import { breakpoints, colors } from "../../styles/theme"
 
 interface Props {
   text: string | number
+  indicator?: string
   background?: string
   textColor?: string
   justify?: number
@@ -21,6 +22,7 @@ const TextContainer = ({
   textColor,
   withBorder,
   justifyIfSmall,
+  indicator
 }: Props) => {
   return (
     <div
@@ -45,6 +47,20 @@ const TextContainer = ({
         }
       `}
     >
+      {indicator && (
+        <span
+          css={css`
+            position: absolute;
+            bottom: 30%;
+            left: 4px;
+            border-radius: 100%;
+            width: 12px;
+            height: 12px;
+            background-color: ${indicator};
+
+          `}
+        />
+      )}
       <SimpleText text={text} color={textColor} />
       {withBorder && (
         <span

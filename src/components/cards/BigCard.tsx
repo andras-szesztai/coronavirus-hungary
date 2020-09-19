@@ -20,9 +20,16 @@ interface Props {
   columns: Column[]
   chartData: RunningAvg[]
   isLoading: boolean
+  handleClick: () => void
 }
 
-const BigCard: React.FC<Props> = ({ columns, title, chartData, isLoading }) => {
+const BigCard: React.FC<Props> = ({
+  columns,
+  title,
+  chartData,
+  isLoading,
+  handleClick,
+}) => {
   return (
     <div
       css={css`
@@ -30,7 +37,7 @@ const BigCard: React.FC<Props> = ({ columns, title, chartData, isLoading }) => {
       `}
     >
       <LoadingAnimation isLoading={isLoading} />
-      <CardTitle title={title} />
+      <CardTitle title={title} handleClick={handleClick} />
       <div
         css={css`
           display: grid;
@@ -69,8 +76,7 @@ const BigCard: React.FC<Props> = ({ columns, title, chartData, isLoading }) => {
                   text={row.text}
                   justifyIfSmall={row.justifyIfSmall}
                   withBorder={row.withBorder}
-                  background={row.background}
-                  textColor={row.background && colors.light.primary}
+                  indicator={row.background}
                 />
               ))}
             </TableColumnContainer>
