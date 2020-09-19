@@ -11,6 +11,7 @@ interface Props {
   textColor?: string
   justify?: number
   withBorder?: boolean
+  justifyIfSmall?: boolean
 }
 
 const TextContainer = ({
@@ -19,6 +20,7 @@ const TextContainer = ({
   background,
   textColor,
   withBorder,
+  justifyIfSmall,
 }: Props) => {
   return (
     <div
@@ -38,6 +40,7 @@ const TextContainer = ({
         @media (max-width: ${breakpoints.sm}) {
           padding: 4px 4px 4px 2px;
           margin: 4px 0px;
+          justify-content: ${justifyIfSmall && "flex-start"};
         }
       `}
     >
@@ -46,11 +49,13 @@ const TextContainer = ({
         <span
           css={css`
             position: absolute;
-            bottom: 0px;
+            bottom: -1px;
             border-radius: 100%;
             width: 100%;
             height: 1px;
             background-color: ${colors.dark.primary};
+
+            left: 1px;
           `}
         />
       )}

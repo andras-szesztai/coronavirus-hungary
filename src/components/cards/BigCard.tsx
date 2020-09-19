@@ -39,7 +39,9 @@ const BigCard: React.FC<Props> = ({ columns, title }) => {
             grid-column-gap: 12px;
           }
           @media (max-width: ${breakpoints.sm}) {
-            grid-column-gap: 8px;
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(2, 1fr);
+            grid-row-gap: 8px;
           }
         `}
       >
@@ -55,6 +57,7 @@ const BigCard: React.FC<Props> = ({ columns, title }) => {
                 <TextContainer
                   key={rowIndex}
                   text={row.text}
+                  justifyIfSmall={row.justifyIfSmall}
                   withBorder={row.withBorder}
                   background={row.background}
                   textColor={row.background && colors.light.primary}

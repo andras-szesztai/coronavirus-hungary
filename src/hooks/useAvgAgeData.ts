@@ -1,5 +1,5 @@
 import React from 'react'
-import { meanBy } from "lodash"
+import { meanBy, round } from "lodash"
 
 import { SMALL_CARD_FIRST_COLUMN } from '../constants/firstColumns'
 
@@ -38,22 +38,22 @@ function useAvgAgeData(data: FormattedDataObject[], maxDate: Date) {
       const newAvgAgeData = {
         isInit: true,
         total: {
-          avgNow: +meanBy(fullData, "age").toFixed(1),
-          avg7: +meanBy(day7Data, "age").toFixed(1),
-          avg30: +meanBy(day30Data, "age").toFixed(1),
-          avg90: +meanBy(day90Data, "age").toFixed(1),
+          avgNow: round(meanBy(fullData, "age"), 1),
+          avg7: round(meanBy(day7Data, "age"), 1),
+          avg30: round(meanBy(day30Data, "age"), 1),
+          avg90: round(meanBy(day90Data, "age"), 1),
         },
         female: {
-          avgNow: +meanBy(makeGenderFiltered(fullData, "f"), "age").toFixed(1),
-          avg7: +meanBy(makeGenderFiltered(day7Data, "f"), "age").toFixed(1),
-          avg30: +meanBy(makeGenderFiltered(day30Data, "f"), "age").toFixed(1),
-          avg90: +meanBy(makeGenderFiltered(day90Data, "f"), "age").toFixed(1),
+          avgNow: round(meanBy(makeGenderFiltered(fullData, "f"), "age"), 1),
+          avg7: round(meanBy(makeGenderFiltered(day7Data, "f"), "age"), 1),
+          avg30: round(meanBy(makeGenderFiltered(day30Data, "f"), "age"), 1),
+          avg90: round(meanBy(makeGenderFiltered(day90Data, "f"), "age"), 1),
         },
         male: {
-          avgNow: +meanBy(makeGenderFiltered(fullData, "m"), "age").toFixed(1),
-          avg7: +meanBy(makeGenderFiltered(day7Data, "m"), "age").toFixed(1),
-          avg30: +meanBy(makeGenderFiltered(day30Data, "m"), "age").toFixed(1),
-          avg90: +meanBy(makeGenderFiltered(day90Data, "m"), "age").toFixed(1),
+          avgNow: round(meanBy(makeGenderFiltered(fullData, "m"), "age"), 1),
+          avg7: round(meanBy(makeGenderFiltered(day7Data, "m"), "age"), 1),
+          avg30: round(meanBy(makeGenderFiltered(day30Data, "m"), "age"), 1),
+          avg90: round(meanBy(makeGenderFiltered(day90Data, "m"), "age"), 1),
         },
       }
       setAvgAgeData(newAvgAgeData)

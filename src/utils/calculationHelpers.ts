@@ -1,8 +1,9 @@
-import { FormattedDataObject } from "../types/Data"
+import { FormattedDataObject, RunningAvg } from "../types/Data"
 import moment from "moment"
-import { Dictionary, meanBy } from "lodash"
+import { Dictionary, meanBy, round } from "lodash"
 
 import { DATE_FORMAT } from "../constants/data"
+import { colors } from "../styles/theme"
 
 export const  makeDateFiltered = (data: FormattedDataObject[], days: number, maxDate: Date) => {
   const limitDate = moment(maxDate).subtract("days", days).toDate()
@@ -50,3 +51,8 @@ export function makeRunningAvg(dateGrouped:  Dictionary<FormattedDataObject[]>) 
   })
   return movingAvg
 }
+
+export const getPastValue = (data: RunningAvg[], days: number) => round(data[data.length - (days + 1)].value)
+
+
+export const getBackground = (base: number, comp: number) => base > comp ? colors.accent.primary : colors.dark.primary

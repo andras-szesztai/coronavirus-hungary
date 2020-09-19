@@ -1,6 +1,7 @@
 import React from "react"
 import { css } from "@emotion/core"
-import { groupBy, last } from "lodash"
+import { groupBy, last, round } from "lodash"
+import moment from "moment"
 
 import {
   DashboardContainer,
@@ -15,44 +16,17 @@ import { MainTitle, SimpleText } from "./components/titles"
 import { BigCard, SmallCard } from "./components/cards"
 
 import { BIG_CARD_FIRST_COLUMN } from "./constants/firstColumns"
-import { useAvgAgeData, useFetchData } from "./hooks"
+import { useAvgAgeData, useFetchData, useRunningAvgData } from "./hooks"
 
 import { colors, breakpoints } from "./styles/theme"
 import { normalTextStyle } from "./styles/styles"
 import { Column } from "./types/Columns"
-import { makeRunningAvg } from "./utils/calculationHelpers"
-import { RunningAvg } from "./types/Data"
 
 const App = () => {
   const { data, maxDate, error } = useFetchData()
 
   const avgAgeColumns = useAvgAgeData(data, maxDate)
-
-  const [runningAvgData, setRunningAvgData] = React.useState([] as RunningAvg[])
-  const [runningAvgValues, setRunningAvgValues] = React.useState({
-    now: 0,
-    day1: 0,
-    day7: 0,
-    day30: 0,
-    day90: 0,
-  })
-  console.log("App -> runningAvgValues", runningAvgValues)
-  const isInit = React.useRef(true)
-  React.useEffect(() => {
-    if (isInit.current && data.length) {
-      isInit.current = false
-      const groupedFull = groupBy(data, "date")
-      const runningAvg = makeRunningAvg(groupedFull)
-      setRunningAvgValues({
-        now: last(runningAvg)?.value || 0,
-        day1: runningAvg[runningAvg.length - 2].value,
-        day7: 0,
-        day30: 0,
-        day90: 0,
-      })
-      setRunningAvgData(runningAvg)
-    }
-  }, [data, data.length, runningAvgData])
+  const { runningAvgData, runningAvgRows } = useRunningAvgData(data)
 
   return (
     <MainContainer>
@@ -75,7 +49,7 @@ const App = () => {
             `}
           >
             <SimpleText
-              text={`Frissítve: 2020. 09. 19.`}
+              text={`Frissítve: ${moment(maxDate).format("YYYY. MM. DD.")}`}
               color={colors.light.primary}
             />
             <h3
@@ -128,17 +102,18 @@ const App = () => {
                   rows: BIG_CARD_FIRST_COLUMN,
                 },
                 {
-                  rows: [
-                    { text: "7 fõ/nap", withBorder: true },
-                    {
-                      text: "14 fõ/nap",
-                      background: colors.accent.primary,
-                    },
-                    {
-                      text: "28 fõ/nap",
-                      background: colors.dark.primary,
-                    },
-                  ],
+                  rows: runningAvgRows,
+                },
+              ]}
+            />
+            <BigCard
+              title="Elhunytak száma összesen (kumulatív)"
+              columns={[
+                {
+                  rows: BIG_CARD_FIRST_COLUMN,
+                },
+                {
+                  rows: runningAvgRows,
                 },
               ]}
             />
