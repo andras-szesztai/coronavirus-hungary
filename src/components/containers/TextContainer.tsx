@@ -6,7 +6,7 @@ import { SimpleText } from "../titles"
 import { breakpoints, colors } from "../../styles/theme"
 
 interface Props {
-  text: string
+  text: string | number
   background?: string
   textColor?: string
   justify?: number

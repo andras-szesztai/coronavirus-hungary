@@ -1,6 +1,6 @@
 import React from "react"
 import { css } from "@emotion/core"
-import axis from "axios"
+import { meanBy } from "lodash"
 
 import {
   DashboardContainer,
@@ -18,10 +18,16 @@ import {
   BIG_CARD_FIRST_COLUMN,
   SMALL_CARD_FIRST_COLUMN,
 } from "./constants/firstColumns"
-import { URL } from "./constants/url"
+import { useFetchData } from "./hooks"
 
 import { colors, breakpoints } from "./styles/theme"
 import { normalTextStyle } from "./styles/styles"
+import { FormattedDataObject } from "./types/Data"
+import {
+  makeDateFiltered,
+  makeGenderFiltered,
+} from "./utils/calculationHelpers"
+import { Column } from "./types/Columns"
 
 interface Data {
   datum: string
@@ -31,18 +37,60 @@ interface Data {
 }
 
 const App = () => {
-  const [data, setData] = React.useState([] as Data[])
-  const [error, setError] = React.useState("")
-  const isInit = React.useRef(true)
-  React.useEffect(() => {
-    if (isInit.current) {
-      isInit.current = false
-      axis
-        .get(URL)
-        .then((res) => setData(res.data.data))
-        .catch((err) => setError(err))
-    }
+  const { data, maxDate, error } = useFetchData()
+
+  const [avgAgeData, setAvgAgeData] = React.useState({
+    isInit: false,
+    total: {
+      avgNow: 0,
+      avg7: 0,
+      avg30: 0,
+      avg90: 0,
+    },
+    female: {
+      avgNow: 0,
+      avg7: 0,
+      avg30: 0,
+      avg90: 0,
+    },
+    male: {
+      avgNow: 0,
+      avg7: 0,
+      avg30: 0,
+      avg90: 0,
+    },
   })
+
+  React.useEffect(() => {
+    if (data.length && !avgAgeData.isInit) {
+      const fullData = data
+      const day7Data = makeDateFiltered(data, 7, maxDate)
+      const day30Data = makeDateFiltered(data, 30, maxDate)
+      const day90Data = makeDateFiltered(data, 90, maxDate)
+      const newAvgAgeData = {
+        isInit: true,
+        total: {
+          avgNow: +meanBy(fullData, "age").toFixed(1),
+          avg7: +meanBy(day7Data, "age").toFixed(1),
+          avg30: +meanBy(day30Data, "age").toFixed(1),
+          avg90: +meanBy(day90Data, "age").toFixed(1),
+        },
+        female: {
+          avgNow: +meanBy(makeGenderFiltered(fullData, "f"), "age").toFixed(1),
+          avg7: +meanBy(makeGenderFiltered(day7Data, "f"), "age").toFixed(1),
+          avg30: +meanBy(makeGenderFiltered(day30Data, "f"), "age").toFixed(1),
+          avg90: +meanBy(makeGenderFiltered(day90Data, "f"), "age").toFixed(1),
+        },
+        male: {
+          avgNow: +meanBy(makeGenderFiltered(fullData, "m"), "age").toFixed(1),
+          avg7: +meanBy(makeGenderFiltered(day7Data, "m"), "age").toFixed(1),
+          avg30: +meanBy(makeGenderFiltered(day30Data, "m"), "age").toFixed(1),
+          avg90: +meanBy(makeGenderFiltered(day90Data, "m"), "age").toFixed(1),
+        },
+      }
+      setAvgAgeData(newAvgAgeData)
+    }
+  }, [avgAgeData, data, data.length, maxDate])
 
   return (
     <MainContainer>
@@ -136,13 +184,34 @@ const App = () => {
           <ColumnContainer>
             <SmallCard title="Elhunytak átlagéletkora (év)">
               <TableContainer columns={4}>
-                {[{ rows: SMALL_CARD_FIRST_COLUMN }].map((column, i) => (
+                {[
+                  { rows: SMALL_CARD_FIRST_COLUMN },
+                  {
+                    rows: [
+                      { text: "Összesen" },
+                      { text: avgAgeData.total.avgNow, withBorder: true },
+                      { text: avgAgeData.total.avg7 },
+                      { text: avgAgeData.total.avg30 },
+                      { text: avgAgeData.total.avg90 },
+                    ],
+                  },
+                  {
+                    rows: [
+                      { text: "Nõ" },
+                      { text: avgAgeData.female.avgNow, withBorder: true },
+                      { text: avgAgeData.female.avg7 },
+                      { text: avgAgeData.female.avg30 },
+                      { text: avgAgeData.female.avg90 },
+                    ],
+                  },
+                ].map((column: Column, i) => (
                   <TableColumnContainer key={i}>
                     {column.rows.map((row, rowIndex) => (
                       <TextContainer
                         key={rowIndex}
                         justify={1}
                         text={row.text}
+                        withBorder={row.withBorder}
                         background={row.background}
                         textColor={row.background && colors.light.primary}
                       />

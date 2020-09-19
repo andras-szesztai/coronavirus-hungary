@@ -4,7 +4,13 @@ import { css } from "@emotion/core"
 
 import { breakpoints, colors, fontSize, fontWeight } from "../../styles/theme"
 
-const SimpleText = ({ text, color }: { text: string; color?: string }) => {
+const SimpleText = ({
+  text,
+  color,
+}: {
+  text: string | number
+  color?: string
+}) => {
   return (
     <h3
       css={css`

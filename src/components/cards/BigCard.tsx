@@ -10,15 +10,8 @@ import {
 import { cardStyle } from "../../styles/styles"
 import { CardTitle } from "../titles"
 import { breakpoints, colors } from "../../styles/theme"
+import { Column } from "../../types/Columns"
 
-interface Row {
-  text: string
-  withBorder?: boolean
-  background?: string
-}
-interface Column {
-  rows: Row[]
-}
 interface Props {
   title: string
   columns: Column[]
