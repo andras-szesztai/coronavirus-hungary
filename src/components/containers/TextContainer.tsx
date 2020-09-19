@@ -39,7 +39,7 @@ const TextContainer = ({
         border: 1px solid ${colors.light.primary};
 
         @media (max-width: ${breakpoints.sm}) {
-          padding: 6px 4px 6px 2px;
+          padding: 5px 4px;
           margin: 4px 0px;
           justify-content: ${justifyIfSmall && "flex-start"};
         }

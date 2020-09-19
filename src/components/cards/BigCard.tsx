@@ -60,7 +60,7 @@ const BigCard: React.FC<Props> = ({ columns, title, chartData, isLoading }) => {
         >
           <AreaChart data={chartData} />
         </div>
-        <TableContainer columns={2}>
+        <TableContainer columns={2} bigCard>
           {columns.map((column, i) => (
             <TableColumnContainer key={i}>
               {column.rows.map((row, rowIndex) => (

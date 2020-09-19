@@ -3,8 +3,6 @@ import { css } from "@emotion/core"
 
 import { fontSize, fontWeight, breakpoints } from "../../styles/theme"
 
-// TEXT::
-
 const MainTitle = () => {
   return (
     <div

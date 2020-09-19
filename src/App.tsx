@@ -162,11 +162,11 @@ const App = () => {
                   grid-column-gap: 16px;
 
                   @media (max-width: ${breakpoints.md}) {
-                    grid-column-gap: 8px;
+                    grid-column-gap: 12px;
                   }
 
                   @media (max-width: ${breakpoints.sm}) {
-                    grid-column-gap: 4px;
+                    grid-column-gap: 8px;
                   }
                 `}
               >
@@ -197,9 +197,10 @@ const App = () => {
                     <TextContainer text="Nõ" />
                     <TextContainer text="Férfi" />
                   </div>
-                  {ratioRows.map((row) => {
+                  {ratioRows.map((row, i) => {
                     return (
                       <div
+                        key={i}
                         css={css`
                           display: flex;
                           justify-content: space-between;

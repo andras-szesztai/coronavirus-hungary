@@ -14,7 +14,7 @@ export const fontSize = {
   xxl: {
     primary: "3rem",
     secondary: "2.25rem",
-    tertiary: "1.5rem",
+    tertiary: "1.75rem",
   },
   lg: {
     primary: "1.25rem",
