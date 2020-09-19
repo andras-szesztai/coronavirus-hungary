@@ -59,7 +59,6 @@ const App = () => {
     },
   }
 
-  console.log("App -> isModal", isModal)
   return (
     <MainContainer>
       {isModal && (
