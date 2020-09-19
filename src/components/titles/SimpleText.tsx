@@ -2,14 +2,19 @@ import React from "react"
 
 import { css } from "@emotion/core"
 
-import { fontSize, fontWeight } from "../../styles/theme"
+import { breakpoints, colors, fontSize, fontWeight } from "../../styles/theme"
 
-const SimpleText = ({ text }: { text: string }) => {
+const SimpleText = ({ text, color }: { text: string; color?: string }) => {
   return (
     <h3
       css={css`
         font-weight: ${fontWeight.md};
-        font-size: ${fontSize.xs};
+        font-size: ${fontSize.xs.primary};
+        color: ${color || colors.dark.primary};
+
+        @media (max-width: ${breakpoints.sm}) {
+          font-size: ${fontSize.xs.secondary};
+        }
       `}
     >
       {text}

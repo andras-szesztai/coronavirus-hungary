@@ -2,7 +2,7 @@ import React from "react"
 
 import { css } from "@emotion/core"
 
-import { cardStyle, normalTextStyle } from "../../styles/styles"
+import { cardStyle } from "../../styles/styles"
 import { CardTitle } from "../titles"
 
 interface Props {

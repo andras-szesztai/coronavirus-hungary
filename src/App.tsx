@@ -15,11 +15,7 @@ import RowContainer from "./components/containers/RowContainer"
 const normalTextStyle = css`
   font-weight: ${fontWeight.md};
 
-  font-size: ${fontSize.xs};
-
-  @media (max-width: ${breakpoints.lg}) {
-    font-size: ${fontSize.xs};
-  }
+  font-size: ${fontSize.xs.primary};
 `
 
 const App = () => {
@@ -39,6 +35,7 @@ const App = () => {
 
               @media (max-width: ${breakpoints.sm}) {
                 justify-content: start;
+                grid-column-gap: 24px;
               }
             `}
           >
@@ -84,7 +81,7 @@ const App = () => {
         >
           <RowContainer>
             <BigCard title="First big card" />
-            <SmallCard title="First small card" />
+            <SmallCard title="Elhunytak átlagéletkora" />
           </RowContainer>
           <RowContainer>
             <BigCard title="Second big card" />

@@ -22,7 +22,10 @@ export const fontSize = {
     tertiary: "1rem",
   },
   md: "1rem",
-  xs: ".875rem",
+  xs: {
+    primary: ".875rem",
+    secondary: ".75rem",
+  },
   xxs: ".75rem",
 }
 
