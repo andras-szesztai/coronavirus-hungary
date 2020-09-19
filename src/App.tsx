@@ -1,9 +1,14 @@
 import React from "react"
 import { css } from "@emotion/core"
 
-import { colors, fontSize, fontWeight, breakpoints } from "./styles/theme"
+import {
+  DashboardContainer,
+  MainContainer,
+  TitleContainer,
+} from "./components/containers"
+import { MainTitle } from "./components/titles"
 
-const borderStyle = `border: 1px solid ${colors.dark.primary};`
+import { colors, fontSize, fontWeight, breakpoints } from "./styles/theme"
 
 const normalTextStyle = css`
   font-weight: ${fontWeight.md};
@@ -15,78 +20,91 @@ const normalTextStyle = css`
   }
 `
 
+const cardStyle = css`
+  background-color: ${colors.light.primary};
+  border-radius: 8px;
+  padding: 16px 24px 24px 24px;
+`
+
 const App = () => {
   return (
-    <div
-      css={css`
-        width: 100vw;
-        height: 100vh;
-        position: relative;
-        padding: 32px 64px 48px 64px;
-
-        @media (max-width: ${breakpoints.lg}) {
-          padding: 24px 48px 32px 48px;
-        }
-
-        @media (max-width: ${breakpoints.md}) {
-          padding: 16px 32px 24px 32px;
-        }
-      `}
-    >
-      <div
-        css={css`
-          width: 100%;
-          height: 100%;
-          display: grid;
-          grid-template-rows: 80px 1fr;
-          grid-row-gap: 40px;
-          ${borderStyle}
-        `}
-      >
-        <div
-          css={css`
-            place-self: stretch;
-            display: grid;
-            grid-template-columns: max-content 1fr;
-            /* grid-column-gap: 40px; */
-            ${borderStyle}
-          `}
-        >
-          <h1
-            css={css`
-              place-self: stretch;
-              display: grid;
-              align-items: center;
-
-              font-size: ${fontSize.xxl.primary};
-              font-weight: ${fontWeight.xs};
-
-              @media (max-width: ${breakpoints.lg}) {
-                font-size: ${fontSize.xxl.secondary};
-              }
-
-              @media (max-width: ${breakpoints.md}) {
-                font-size: ${fontSize.xxl.tertiary};
-              }
-            `}
-          >
-            Koronavírus Magyarországon
-          </h1>
+    <MainContainer>
+      <DashboardContainer>
+        <TitleContainer>
+          <MainTitle/>
           <div
             css={css`
               display: grid;
-              justify-content: end;
               align-items: center;
               grid-template-columns: repeat(2, max-content);
               grid-column-gap: 32px;
+
+              justify-content: end;
+
+              @media (max-width: ${breakpoints.sm}) {
+                justify-content: start;
+              }
             `}
           >
             <h3 css={normalTextStyle}>Frissítve: 2020. 09. 19.</h3>
-            <h3 css={normalTextStyle}>Forrás: </h3>
+            <h3
+              css={css`
+                ${normalTextStyle}
+              `}
+            >
+              Forrás:{" "}
+              <a
+                css={css`
+                  color: ${colors.light.primary};
+                `}
+                href="https://koronavirus.gov.hu"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                koronavirus.gov.hu
+              </a>
+            </h3>
           </div>
-        </div>
-      </div>
-    </div>
+        </TitleContainer>
+        {/* <div
+          css={css`
+            place-self: stretch;
+            display: grid;
+            grid-template-rows: repeat(2, 1fr);
+            grid-row-gap: 48px;
+            ${borderStyle}
+          `}
+        >
+          <div
+            css={css`
+              display: grid;
+              grid-template-columns: 1fr max-content;
+              grid-column-gap: 48px;
+
+              @media (max-width: ${breakpoints.lg}) {
+                grid-column-gap: 40px;
+              }
+
+              @media (max-width: ${breakpoints.md}) {
+                grid-column-gap: 32px;
+              }
+            `}
+          >
+            <div
+              css={css`
+                ${cardStyle}
+              `}
+            />
+            <div
+              css={css`
+                ${cardStyle}
+                width: 400px;
+              `}
+            />
+          </div>
+        </div> */}
+      </DashboardContainer>
+    </MainContainer>
   )
 }
 

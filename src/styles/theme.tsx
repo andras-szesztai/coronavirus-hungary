@@ -13,8 +13,8 @@ export const colors = {
 export const fontSize = {
   xxl: {
     primary: "3rem",
-    secondary: "2.5rem",
-    tertiary: "2rem",
+    secondary: "2.25rem",
+    tertiary: "1.5rem",
   },
   lg: "1.25rem",
   md: "1rem",
@@ -32,4 +32,5 @@ export const fontWeight = {
 export const breakpoints = {
   lg: "1140px",
   md: "900px",
+  sm: "725px",
 }
