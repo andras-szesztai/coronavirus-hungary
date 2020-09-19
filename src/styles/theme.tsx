@@ -30,8 +30,8 @@ export const fontSize = {
 }
 
 export const fontWeight = {
-  lg: 700,
-  md: 500,
+  lg: 600,
+  md: 400,
   sm: 200,
   xs: 100,
 }
