@@ -6,6 +6,9 @@ import {
   MainContainer,
   TitleContainer,
   ColumnContainer,
+  TableContainer,
+  TableColumnContainer,
+  TextContainer,
 } from "./components/containers"
 import { MainTitle, SimpleText } from "./components/titles"
 import { BigCard, SmallCard } from "./components/cards"
@@ -84,11 +87,24 @@ const App = () => {
             <BigCard
               title="Elhunytak száma naponta (7 napos mozgóátlag)"
               columns={[
-                { rows: [{ text: "Jelenleg" }, { text: "1 nappal ezelõtt" }] },
+                {
+                  rows: [
+                    { text: "Jelenleg" },
+                    { text: "1 nappal ezelõtt" },
+                    { text: "7 nappal ezelõtt" },
+                  ],
+                },
                 {
                   rows: [
                     { text: "7 fõ/nap", withBorder: true },
-                    { text: "1 nappal ezelõtt" },
+                    {
+                      text: "14 fõ/nap",
+                      background: colors.accent.primary,
+                    },
+                    {
+                      text: "28 fõ/nap",
+                      background: colors.dark.primary,
+                    },
                   ],
                 },
               ]}
@@ -96,7 +112,38 @@ const App = () => {
             {/* <BigCard title="Elhunytak száma (kumulatív)" /> */}
           </ColumnContainer>
           <ColumnContainer>
-            <SmallCard title="Elhunytak átlagéletkora (év)" />
+            <SmallCard title="Elhunytak átlagéletkora (év)">
+              <TableContainer columns={4}>
+                <TableColumnContainer>
+                  <TextContainer text="-" textColor={colors.light.primary} />
+                  <TextContainer text="Összesen" />
+                  <TextContainer text="Elõzõ 7 nap" />
+                  <TextContainer text="Elõzõ 30 nap" />
+                  <TextContainer text="Elõzõ 90 nap" />
+                </TableColumnContainer>
+                <TableColumnContainer>
+                  <TextContainer justify={1} text="Összesen" />
+                  <TextContainer justify={1} text="77.5" withBorder />
+                  <TextContainer justify={1} text="73.3" />
+                  <TextContainer justify={1} text="73.2" />
+                  <TextContainer justify={1} text="68.5" />
+                </TableColumnContainer>
+                <TableColumnContainer>
+                  <TextContainer justify={1} text="Nõ" />
+                  <TextContainer justify={1} text="80.5" withBorder />
+                  <TextContainer justify={1} text="82.3" />
+                  <TextContainer justify={1} text="76.2" />
+                  <TextContainer justify={1} text="76.1" />
+                </TableColumnContainer>
+                <TableColumnContainer>
+                  <TextContainer justify={1} text="Férfi" />
+                  <TextContainer justify={1} text="70.6" withBorder />
+                  <TextContainer justify={1} text="82.3" />
+                  <TextContainer justify={1} text="76.2" />
+                  <TextContainer justify={1} text="76.1" />
+                </TableColumnContainer>
+              </TableContainer>
+            </SmallCard>
             <SmallCard title="Nemek százalékos megoszlása" />
           </ColumnContainer>
         </div>

@@ -14,7 +14,7 @@ import { breakpoints, colors } from "../../styles/theme"
 interface Row {
   text: string
   withBorder?: boolean
-  background?: boolean
+  background?: string
 }
 interface Column {
   rows: Row[]
@@ -63,6 +63,8 @@ const BigCard: React.FC<Props> = ({ columns, title }) => {
                   justify={1}
                   text={row.text}
                   withBorder={row.withBorder}
+                  background={row.background}
+                  textColor={row.background && colors.light.primary}
                 />
               ))}
             </TableColumnContainer>

@@ -1,0 +1,1 @@
+export const URL = "https://boring-barchart-gatsby.firebaseio.com/corona.json"
