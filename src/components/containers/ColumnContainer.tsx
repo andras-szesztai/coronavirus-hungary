@@ -4,24 +4,24 @@ import { css } from "@emotion/core"
 
 import { breakpoints } from "../../styles/theme"
 
-const RowContainer: React.FC = ({ children }) => {
+const ColumnContainer: React.FC = ({ children }) => {
   return (
     <div
       css={css`
         display: grid;
-        grid-template-columns: 1fr max-content;
-        grid-column-gap: 48px;
+        grid-template-rows: repeat(2, min-content);
+        grid-row-gap: 48px;
 
         @media (max-width: ${breakpoints.lg}) {
-          grid-column-gap: 40px;
+          grid-row-gap: 40px;
         }
 
         @media (max-width: ${breakpoints.md}) {
-          grid-column-gap: 32px;
+          grid-row-gap: 32px;
         }
 
         @media (max-width: ${breakpoints.sm}) {
-          grid-template-columns: 1fr;
+          grid-template-rows: 1fr;
           grid-template-rows: repeat(2, 1fr);
           grid-row-gap: 24px;
         }
@@ -32,4 +32,4 @@ const RowContainer: React.FC = ({ children }) => {
   )
 }
 
-export default RowContainer
+export default ColumnContainer

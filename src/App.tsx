@@ -5,12 +5,12 @@ import {
   DashboardContainer,
   MainContainer,
   TitleContainer,
+  ColumnContainer
 } from "./components/containers"
 import { MainTitle } from "./components/titles"
 import { BigCard, SmallCard } from "./components/cards"
 
 import { colors, fontSize, fontWeight, breakpoints } from "./styles/theme"
-import RowContainer from "./components/containers/RowContainer"
 
 const normalTextStyle = css`
   font-weight: ${fontWeight.md};
@@ -63,30 +63,33 @@ const App = () => {
           css={css`
             place-self: stretch;
             display: grid;
-            grid-template-rows: repeat(2, 1fr);
-            grid-row-gap: 48px;
+            grid-template-columns: 1fr max-content;
+            grid-column-gap: 48px;
 
             @media (max-width: ${breakpoints.lg}) {
-              grid-row-gap: 40px;
+              grid-column-gap: 40px;
             }
 
             @media (max-width: ${breakpoints.md}) {
-              grid-row-gap: 32px;
+              grid-column-gap: 32px;
             }
 
             @media (max-width: ${breakpoints.sm}) {
+              grid-column-gap: 0px;
+              grid-template-columns: 1fr;
               grid-row-gap: 24px;
+              grid-template-rows: repeat(2, min-content);
             }
           `}
         >
-          <RowContainer>
+          <ColumnContainer>
             <BigCard title="First big card" />
-            <SmallCard title="Elhunytak átlagéletkora" />
-          </RowContainer>
-          <RowContainer>
             <BigCard title="Second big card" />
+          </ColumnContainer>
+          <ColumnContainer>
+            <SmallCard title="Elhunytak átlagéletkora" />
             <SmallCard title="Second small card" />
-          </RowContainer>
+          </ColumnContainer>
         </div>
       </DashboardContainer>
     </MainContainer>

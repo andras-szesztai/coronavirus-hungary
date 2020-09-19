@@ -1,17 +1,18 @@
 import React from "react"
 import { css } from "@emotion/core"
 
-import { CardTitle, SimpleText } from "../titles"
+import { CardTitle } from "../titles"
 
 import { cardStyle } from "../../styles/styles"
 import { breakpoints, colors } from "../../styles/theme"
 import { TableColumnContainer, TextContainer } from "../containers"
 
 interface Props {
-  title: string
+  title: string,
+  withMargin?: boolean
 }
 
-const SmallCard = ({ title }: Props) => {
+const SmallCard = ({ title, withMargin }: Props) => {
   return (
     <div
       css={css`
