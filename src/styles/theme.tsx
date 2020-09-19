@@ -30,16 +30,16 @@ export const fontSize = {
 }
 
 export const fontWeight = {
-  lg: 600,
+  lg: 700,
   md: 500,
   sm: 200,
   xs: 100,
 }
 
 export const breakpoints = {
-  lg: "1140px",
-  md: "960px",
-  sm: "800px",
+  lg: "1240px",
+  md: "1050px",
+  sm: "980px",
 }
 
 

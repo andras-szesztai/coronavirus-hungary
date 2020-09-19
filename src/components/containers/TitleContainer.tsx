@@ -13,7 +13,7 @@ const TitleContainer: React.FC = ({ children }) => {
 
         @media (max-width: ${breakpoints.sm}) {
           grid-template-columns: 1fr;
-          grid-template-rows: 40px 30px;
+          grid-template-rows: 40px 25px;
         }
       `}
     >

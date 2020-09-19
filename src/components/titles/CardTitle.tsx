@@ -2,21 +2,19 @@ import React from "react"
 
 import { css } from "@emotion/core"
 
-import { breakpoints, fontSize } from "../../styles/theme"
+import { breakpoints, fontSize, fontWeight } from "../../styles/theme"
 
 const CardTitle = ({ title }: { title: string }) => {
   return (
     <h2
       css={css`
-        font-size: ${fontSize.lg.primary};
-
-        @media (max-width: ${breakpoints.md}) {
-          font-size: ${fontSize.lg.secondary};
-        }
+        font-size: ${fontSize.xs.primary};
+        font-weight: ${fontWeight.lg};
 
         @media (max-width: ${breakpoints.sm}) {
-          font-size: ${fontSize.lg.tertiary};
+          font-size: ${fontSize.xs.secondary};
         }
+
       `}
     >
       {title}

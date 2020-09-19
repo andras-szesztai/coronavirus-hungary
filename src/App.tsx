@@ -5,18 +5,13 @@ import {
   DashboardContainer,
   MainContainer,
   TitleContainer,
-  ColumnContainer
+  ColumnContainer,
 } from "./components/containers"
-import { MainTitle } from "./components/titles"
+import { MainTitle, SimpleText } from "./components/titles"
 import { BigCard, SmallCard } from "./components/cards"
 
-import { colors, fontSize, fontWeight, breakpoints } from "./styles/theme"
-
-const normalTextStyle = css`
-  font-weight: ${fontWeight.md};
-
-  font-size: ${fontSize.xs.primary};
-`
+import { colors, breakpoints } from "./styles/theme"
+import { normalTextStyle } from "./styles/styles"
 
 const App = () => {
   return (
@@ -39,7 +34,10 @@ const App = () => {
               }
             `}
           >
-            <h3 css={normalTextStyle}>Frissítve: 2020. 09. 19.</h3>
+            <SimpleText
+              text={`Frissítve: 2020. 09. 19.`}
+              color={colors.light.primary}
+            />
             <h3
               css={css`
                 ${normalTextStyle}
@@ -83,12 +81,23 @@ const App = () => {
           `}
         >
           <ColumnContainer>
-            <BigCard title="First big card" />
-            <BigCard title="Second big card" />
+            <BigCard
+              title="Elhunytak száma naponta (7 napos mozgóátlag)"
+              columns={[
+                { rows: [{ text: "Jelenleg" }, { text: "1 nappal ezelõtt" }] },
+                {
+                  rows: [
+                    { text: "7 fõ/nap", withBorder: true },
+                    { text: "1 nappal ezelõtt" },
+                  ],
+                },
+              ]}
+            />
+            {/* <BigCard title="Elhunytak száma (kumulatív)" /> */}
           </ColumnContainer>
           <ColumnContainer>
-            <SmallCard title="Elhunytak átlagéletkora" />
-            <SmallCard title="Second small card" />
+            <SmallCard title="Elhunytak átlagéletkora (év)" />
+            <SmallCard title="Nemek százalékos megoszlása" />
           </ColumnContainer>
         </div>
       </DashboardContainer>

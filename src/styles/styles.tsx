@@ -23,9 +23,12 @@ export const cardStyle = css`
   }
 `
 
-
 export const normalTextStyle = css`
   font-weight: ${fontWeight.md};
+  font-size: ${fontSize.xs.primary};
+  color: ${colors.light.primary};
 
-  font-size: ${fontSize.xs};
+  @media (max-width: ${breakpoints.sm}) {
+    font-size: ${fontSize.xs.secondary};
+  }
 `

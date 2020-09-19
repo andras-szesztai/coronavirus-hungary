@@ -19,7 +19,7 @@ const DashboardContainer: React.FC = ({ children }) => {
         }
 
         @media (max-width: ${breakpoints.md}) {
-          grid-template-rows: 60px 1fr;
+          grid-template-rows: 55px 1fr;
           grid-row-gap: 24px;
         }
 

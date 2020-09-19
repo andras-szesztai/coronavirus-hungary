@@ -1,7 +1,5 @@
 import React from "react"
 import { css } from "@emotion/core"
-import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io"
-import { AiOutlineMinus } from "react-icons/ai"
 
 import { SimpleText } from "../titles"
 
@@ -13,7 +11,6 @@ interface Props {
   textColor?: string
   justify?: number
   withBorder?: boolean
-  withIcon?: number
 }
 
 const TextContainer = ({
@@ -22,7 +19,6 @@ const TextContainer = ({
   background,
   textColor,
   withBorder,
-  withIcon,
 }: Props) => {
   return (
     <div
@@ -36,25 +32,16 @@ const TextContainer = ({
         background: ${background};
         border-radius: 4px;
 
-        padding: 8px 4px;
+        padding: 4px 8px;
+        margin: 8px 0px;
 
         @media (max-width: ${breakpoints.sm}) {
-          padding: 8px 2px;
+          padding: 4px 4px 4px 2px;
+          margin: 4px 0px;
         }
       `}
     >
       <SimpleText text={text} color={textColor} />
-      {typeof withIcon == "number" && (
-        <div
-          css={css`
-            margin-left: 4px;
-          `}
-        >
-          {withIcon === 0 && <AiOutlineMinus color={textColor} size={16} />}
-          {withIcon < 0 && <IoMdArrowDropdown color={textColor} size={16} />}
-          {withIcon > 0 && <IoMdArrowDropup color={textColor} size={16} />}
-        </div>
-      )}
       {withBorder && (
         <span
           css={css`

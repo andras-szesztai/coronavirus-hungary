@@ -5,10 +5,14 @@ import { CardTitle } from "../titles"
 
 import { cardStyle } from "../../styles/styles"
 import { breakpoints, colors } from "../../styles/theme"
-import { TableColumnContainer, TextContainer } from "../containers"
+import {
+  TableColumnContainer,
+  TableContainer,
+  TextContainer,
+} from "../containers"
 
 interface Props {
-  title: string,
+  title: string
   withMargin?: boolean
 }
 
@@ -24,21 +28,7 @@ const SmallCard = ({ title, withMargin }: Props) => {
       `}
     >
       <CardTitle title={title} />
-      <div
-        css={css`
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          grid-column-gap: 16px;
-
-          @media (max-width: ${breakpoints.md}) {
-            grid-column-gap: 8px;
-          }
-
-          @media (max-width: ${breakpoints.sm}) {
-            grid-column-gap: 4px;
-          }
-        `}
-      >
+      <TableContainer columns={4}>
         <TableColumnContainer>
           <TextContainer text="-" textColor={colors.light.primary} />
           <TextContainer text="Összesen" />
@@ -48,26 +38,26 @@ const SmallCard = ({ title, withMargin }: Props) => {
         </TableColumnContainer>
         <TableColumnContainer>
           <TextContainer justify={1} text="Összesen" />
-          <TextContainer justify={1} text="77.5 év" withBorder />
-          <TextContainer justify={1} text="73.3" withIcon={0} />
-          <TextContainer justify={1} text="73.2" withIcon={1} />
-          <TextContainer justify={1} text="68.5" withIcon={-1} />
+          <TextContainer justify={1} text="77.5" withBorder />
+          <TextContainer justify={1} text="73.3" />
+          <TextContainer justify={1} text="73.2" />
+          <TextContainer justify={1} text="68.5" />
         </TableColumnContainer>
         <TableColumnContainer>
           <TextContainer justify={1} text="Nõ" />
-          <TextContainer justify={1} text="80.5 év" withBorder />
-          <TextContainer justify={1} text="82.3" withIcon={1} />
-          <TextContainer justify={1} text="76.2" withIcon={1} />
-          <TextContainer justify={1} text="76.1" withIcon={1} />
+          <TextContainer justify={1} text="80.5" withBorder />
+          <TextContainer justify={1} text="82.3" />
+          <TextContainer justify={1} text="76.2" />
+          <TextContainer justify={1} text="76.1" />
         </TableColumnContainer>
         <TableColumnContainer>
           <TextContainer justify={1} text="Férfi" />
-          <TextContainer justify={1} text="70.6 év" withBorder />
-          <TextContainer justify={1} text="82.3" withIcon={1} />
-          <TextContainer justify={1} text="76.2" withIcon={1} />
-          <TextContainer justify={1} text="76.1" withIcon={1} />
+          <TextContainer justify={1} text="70.6" withBorder />
+          <TextContainer justify={1} text="82.3" />
+          <TextContainer justify={1} text="76.2" />
+          <TextContainer justify={1} text="76.1" />
         </TableColumnContainer>
-      </div>
+      </TableContainer>
     </div>
   )
 }
