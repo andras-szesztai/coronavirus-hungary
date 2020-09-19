@@ -1,5 +1,6 @@
 import React from "react"
 import { css } from "@emotion/core"
+import axis from "axios"
 
 import {
   DashboardContainer,
@@ -13,10 +14,36 @@ import {
 import { MainTitle, SimpleText } from "./components/titles"
 import { BigCard, SmallCard } from "./components/cards"
 
+import {
+  BIG_CARD_FIRST_COLUMN,
+  SMALL_CARD_FIRST_COLUMN,
+} from "./constants/firstColumns"
+import { URL } from "./constants/url"
+
 import { colors, breakpoints } from "./styles/theme"
 import { normalTextStyle } from "./styles/styles"
 
+interface Data {
+  datum: string
+  kor: string
+  nem: string
+  sorszam: string
+}
+
 const App = () => {
+  const [data, setData] = React.useState([] as Data[])
+  const [error, setError] = React.useState("")
+  const isInit = React.useRef(true)
+  React.useEffect(() => {
+    if (isInit.current) {
+      isInit.current = false
+      axis
+        .get(URL)
+        .then((res) => setData(res.data.data))
+        .catch((err) => setError(err))
+    }
+  })
+
   return (
     <MainContainer>
       <DashboardContainer>
@@ -88,11 +115,7 @@ const App = () => {
               title="Elhunytak száma naponta (7 napos mozgóátlag)"
               columns={[
                 {
-                  rows: [
-                    { text: "Jelenleg" },
-                    { text: "1 nappal ezelõtt" },
-                    { text: "7 nappal ezelõtt" },
-                  ],
+                  rows: BIG_CARD_FIRST_COLUMN,
                 },
                 {
                   rows: [
@@ -109,39 +132,23 @@ const App = () => {
                 },
               ]}
             />
-            {/* <BigCard title="Elhunytak száma (kumulatív)" /> */}
           </ColumnContainer>
           <ColumnContainer>
             <SmallCard title="Elhunytak átlagéletkora (év)">
               <TableContainer columns={4}>
-                <TableColumnContainer>
-                  <TextContainer text="-" textColor={colors.light.primary} />
-                  <TextContainer text="Összesen" />
-                  <TextContainer text="Elõzõ 7 nap" />
-                  <TextContainer text="Elõzõ 30 nap" />
-                  <TextContainer text="Elõzõ 90 nap" />
-                </TableColumnContainer>
-                <TableColumnContainer>
-                  <TextContainer justify={1} text="Összesen" />
-                  <TextContainer justify={1} text="77.5" withBorder />
-                  <TextContainer justify={1} text="73.3" />
-                  <TextContainer justify={1} text="73.2" />
-                  <TextContainer justify={1} text="68.5" />
-                </TableColumnContainer>
-                <TableColumnContainer>
-                  <TextContainer justify={1} text="Nõ" />
-                  <TextContainer justify={1} text="80.5" withBorder />
-                  <TextContainer justify={1} text="82.3" />
-                  <TextContainer justify={1} text="76.2" />
-                  <TextContainer justify={1} text="76.1" />
-                </TableColumnContainer>
-                <TableColumnContainer>
-                  <TextContainer justify={1} text="Férfi" />
-                  <TextContainer justify={1} text="70.6" withBorder />
-                  <TextContainer justify={1} text="82.3" />
-                  <TextContainer justify={1} text="76.2" />
-                  <TextContainer justify={1} text="76.1" />
-                </TableColumnContainer>
+                {[{ rows: SMALL_CARD_FIRST_COLUMN }].map((column, i) => (
+                  <TableColumnContainer key={i}>
+                    {column.rows.map((row, rowIndex) => (
+                      <TextContainer
+                        key={rowIndex}
+                        justify={1}
+                        text={row.text}
+                        background={row.background}
+                        textColor={row.background && colors.light.primary}
+                      />
+                    ))}
+                  </TableColumnContainer>
+                ))}
               </TableContainer>
             </SmallCard>
             <SmallCard title="Nemek százalékos megoszlása" />

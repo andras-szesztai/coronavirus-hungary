@@ -8,7 +8,6 @@ const MainContainer: React.FC = ({ children }) => {
     <div
       css={css`
         width: 100vw;
-        height: 100vh;
         position: relative;
         padding: 32px 64px 48px 64px;
 
@@ -21,7 +20,7 @@ const MainContainer: React.FC = ({ children }) => {
         }
 
         @media (max-width: ${breakpoints.sm}) {
-          padding: 12px 16px 12px 16px;
+          padding: 12px 16px 16px 16px;
         }
       `}
     >

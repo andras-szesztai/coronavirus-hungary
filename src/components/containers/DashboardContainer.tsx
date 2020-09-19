@@ -10,7 +10,7 @@ const DashboardContainer: React.FC = ({ children }) => {
         width: 100%;
         height: 100%;
         display: grid;
-        grid-template-rows: 80px 1fr;
+        grid-template-rows: min-content 1fr;
         grid-row-gap: 40px;
 
         @media (max-width: ${breakpoints.lg}) {

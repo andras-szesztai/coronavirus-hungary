@@ -56,10 +56,11 @@ const BigCard: React.FC<Props> = ({ columns, title }) => {
           `}
         />
         <TableContainer columns={2}>
-          {columns.map((column) => (
-            <TableColumnContainer>
-              {column.rows.map((row) => (
+          {columns.map((column, i) => (
+            <TableColumnContainer key={i}>
+              {column.rows.map((row, rowIndex) => (
                 <TextContainer
+                  key={rowIndex}
                   justify={1}
                   text={row.text}
                   withBorder={row.withBorder}
