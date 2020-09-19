@@ -1,6 +1,5 @@
 import React from "react"
 import { css } from "@emotion/core"
-import { groupBy, last, round } from "lodash"
 import moment from "moment"
 
 import {
@@ -16,7 +15,7 @@ import { MainTitle, SimpleText } from "./components/titles"
 import { BigCard, SmallCard } from "./components/cards"
 
 import { BIG_CARD_FIRST_COLUMN } from "./constants/firstColumns"
-import { useAvgAgeData, useFetchData, useRunningAvgData } from "./hooks"
+import { useAvgAgeData, useFetchData, useRunningAvgData, useRunningTotalData } from "./hooks"
 
 import { colors, breakpoints } from "./styles/theme"
 import { normalTextStyle } from "./styles/styles"
@@ -27,6 +26,7 @@ const App = () => {
 
   const avgAgeColumns = useAvgAgeData(data, maxDate)
   const { runningAvgData, runningAvgRows } = useRunningAvgData(data)
+  const { runningTotalData, runningTotalRows } = useRunningTotalData(data)
 
   return (
     <MainContainer>
@@ -105,6 +105,7 @@ const App = () => {
                   rows: runningAvgRows,
                 },
               ]}
+              chartData={runningAvgData}
             />
             <BigCard
               title="Elhunytak száma összesen (kumulatív)"
@@ -113,13 +114,14 @@ const App = () => {
                   rows: BIG_CARD_FIRST_COLUMN,
                 },
                 {
-                  rows: runningAvgRows,
+                  rows: runningTotalRows,
                 },
               ]}
+              chartData={runningTotalData}
             />
           </ColumnContainer>
           <ColumnContainer>
-            <SmallCard title="Elhunytak átlagéletkora (év)">
+            <SmallCard title="Elhunytak átlagéletkora">
               <TableContainer columns={4}>
                 {avgAgeColumns.map((column: Column, i) => (
                   <TableColumnContainer key={i}>

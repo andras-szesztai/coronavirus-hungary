@@ -65,28 +65,28 @@ function useAvgAgeData(data: FormattedDataObject[], maxDate: Date) {
     {
       rows: [
         { text: "Összesen" },
-        { text: avgAgeData.total.avgNow, withBorder: true },
-        { text: avgAgeData.total.avg7 },
-        { text: avgAgeData.total.avg30 },
-        { text: avgAgeData.total.avg90 },
+        { text: `${avgAgeData.total.avgNow} év`, withBorder: true },
+        { text: `${avgAgeData.total.avg7} év` },
+        { text: `${avgAgeData.total.avg30} év` },
+        { text: `${avgAgeData.total.avg90} év` },
       ],
     },
     {
       rows: [
         { text: "Nõ" },
-        { text: avgAgeData.female.avgNow, withBorder: true },
-        { text: avgAgeData.female.avg7 },
-        { text: avgAgeData.female.avg30 },
-        { text: avgAgeData.female.avg90 },
+        { text: `${avgAgeData.female.avgNow} év`, withBorder: true },
+        { text: `${avgAgeData.female.avg7} év` },
+        { text: `${avgAgeData.female.avg30} év` },
+        { text: `${avgAgeData.female.avg90} év` },
       ],
     },
     {
       rows: [
         { text: "Férfi" },
-        { text: avgAgeData.male.avgNow, withBorder: true },
-        { text: avgAgeData.male.avg7 },
-        { text: avgAgeData.male.avg30 },
-        { text: avgAgeData.male.avg90 },
+        { text: `${avgAgeData.male.avgNow} év`, withBorder: true },
+        { text: `${avgAgeData.male.avg7} év` },
+        { text: `${avgAgeData.male.avg30} év` },
+        { text: `${avgAgeData.male.avg90} év` },
       ],
     },
   ]

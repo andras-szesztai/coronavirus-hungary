@@ -11,13 +11,16 @@ import { cardStyle } from "../../styles/styles"
 import { CardTitle } from "../titles"
 import { breakpoints, colors } from "../../styles/theme"
 import { Column } from "../../types/Columns"
+import AreaChart from "../charts/AreaChart"
+import { RunningAvg } from "../../types/Data"
 
 interface Props {
   title: string
   columns: Column[]
+  chartData: RunningAvg[]
 }
 
-const BigCard: React.FC<Props> = ({ columns, title }) => {
+const BigCard: React.FC<Props> = ({ columns, title, chartData }) => {
   return (
     <div
       css={css`
@@ -47,9 +50,13 @@ const BigCard: React.FC<Props> = ({ columns, title }) => {
       >
         <div
           css={css`
-            border: 1px solid ${colors.dark.primary};
+            border-left: 1px solid ${colors.dark.primary};
+            border-bottom: 1px solid ${colors.dark.primary};
+            position: relative;
           `}
-        />
+        >
+          <AreaChart data={chartData}/>
+        </div>
         <TableContainer columns={2}>
           {columns.map((column, i) => (
             <TableColumnContainer key={i}>

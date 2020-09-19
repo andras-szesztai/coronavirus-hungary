@@ -6,6 +6,7 @@ import last from "lodash/last"
 import { DataObject, FormattedDataObject } from '../types/Data'
 
 import { URL } from '../constants/url'
+import { DATE_FORMAT } from '../constants/data'
 
 const useFetchData = () => {
   const [data, setData] = React.useState([] as FormattedDataObject[])
@@ -20,7 +21,7 @@ const useFetchData = () => {
         .then((res) => {
           const formattedData = res.data.data.map((d: DataObject)  => ({
             number: +d.sorszam,
-            date: d.datum,
+            date: moment(d.datum, DATE_FORMAT).format(DATE_FORMAT),
             age: +d.kor,
             gender: d.nem === "Férfi" ? "m" : "f"
           }))

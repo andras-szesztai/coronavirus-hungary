@@ -56,3 +56,17 @@ export const getPastValue = (data: RunningAvg[], days: number) => round(data[dat
 
 
 export const getBackground = (base: number, comp: number) => base > comp ? colors.accent.primary : colors.dark.primary
+
+export function makeRunningTotal(dateGrouped:  Dictionary<FormattedDataObject[]>) {
+  const allDates = Object.keys(dateGrouped)
+  const enrichedAllDates = getDaysArray(
+    allDates[0],
+    allDates[allDates.length - 1]
+  )
+  let accumulator = 0
+  return enrichedAllDates.map(date => {
+    const currVal = dateGrouped[date] ? dateGrouped[date].length : 0
+    accumulator = accumulator + currVal
+    return { date: moment(date, DATE_FORMAT).toDate(), value: accumulator }
+  })
+}
