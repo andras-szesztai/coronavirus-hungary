@@ -1,6 +1,7 @@
 import React from "react"
 import { css } from "@emotion/core"
 import moment from "moment"
+import { format } from "d3-format"
 
 import {
   DashboardContainer,
@@ -14,10 +15,14 @@ import {
 import { MainTitle, SimpleText } from "./components/titles"
 import { BigCard, SmallCard } from "./components/cards"
 
-import { BIG_CARD_FIRST_COLUMN } from "./constants/firstColumns"
+import {
+  BIG_CARD_FIRST_COLUMN,
+  SMALL_CARD_FIRST_COLUMN,
+} from "./constants/firstColumns"
 import {
   useAvgAgeData,
   useFetchData,
+  useGenderRatioData,
   useRunningAvgData,
   useRunningTotalData,
 } from "./hooks"
@@ -30,6 +35,7 @@ const App = () => {
   const { data, maxDate, error } = useFetchData()
 
   const avgAgeColumns = useAvgAgeData(data, maxDate)
+  const RatioColumns = useGenderRatioData(data, maxDate)
   const { runningAvgData, runningAvgRows } = useRunningAvgData(data)
   const { runningTotalData, runningTotalRows } = useRunningTotalData(data)
 
@@ -144,7 +150,86 @@ const App = () => {
                 ))}
               </TableContainer>
             </SmallCard>
-            <SmallCard title="Nemek százalékos megoszlása" />
+            <SmallCard title="Nemek százalékos megoszlása">
+              <div
+                css={css`
+                  display: grid;
+                  grid-template-columns: max-content 1fr;
+                  grid-column-gap: 16px;
+
+                  @media (max-width: ${breakpoints.md}) {
+                    grid-column-gap: 8px;
+                  }
+
+                  @media (max-width: ${breakpoints.sm}) {
+                    grid-column-gap: 4px;
+                  }
+                `}
+              >
+                <TableColumnContainer>
+                  {SMALL_CARD_FIRST_COLUMN.map((row, rowIndex) => (
+                    <TextContainer
+                      key={rowIndex}
+                      justify={row.justify}
+                      text={row.text}
+                      background={row.background}
+                      textColor={row.background && colors.light.primary}
+                    />
+                  ))}
+                </TableColumnContainer>
+                <div
+                  css={css`
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-around;
+                  `}
+                >
+                  <div
+                    css={css`
+                      display: flex;
+                      justify-content: space-between;
+                    `}
+                  >
+                    <TextContainer text="Nõ" />
+                    <TextContainer text="Férfi" />
+                  </div>
+                  <div
+                    css={css`
+                      display: flex;
+                      justify-content: space-between;
+                      position: relative;
+                    `}
+                  >
+                    <div
+                      css={css`
+                        width: 40.5%;
+                      `}
+                    >
+                      <TextContainer
+                        text="40.5%"
+                        background={colors.dark.primary}
+                        textColor={colors.light.primary}
+                        justify={1}
+                      />
+                    </div>
+                    <div
+                      css={css`
+                        width: 59.5%;
+                      `}
+                    >
+                      <TextContainer
+                        text="59.5%"
+                        background={colors.dark.primary}
+                        textColor={colors.light.primary}
+                      />
+                    </div>
+                  </div>
+                  <TextContainer text="15.6%" />
+                  <TextContainer text="hello" />
+                  <TextContainer text="hello" />
+                </div>
+              </div>
+            </SmallCard>
           </ColumnContainer>
         </div>
       </DashboardContainer>

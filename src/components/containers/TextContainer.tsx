@@ -34,11 +34,12 @@ const TextContainer = ({
         background: ${background};
         border-radius: 4px;
 
-        padding: 4px 8px;
+        padding: 5px 8px;
         margin: 8px 0px;
+        border: 1px solid ${colors.light.primary};
 
         @media (max-width: ${breakpoints.sm}) {
-          padding: 4px 4px 4px 2px;
+          padding: 6px 4px 6px 2px;
           margin: 4px 0px;
           justify-content: ${justifyIfSmall && "flex-start"};
         }
