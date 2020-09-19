@@ -18,7 +18,7 @@ export const fontSize = {
   },
   lg: {
     primary: "1.25rem",
-    secondary: "1.115rem",
+    secondary: "1.125rem",
     tertiary: "1rem",
   },
   md: "1rem",
@@ -35,8 +35,8 @@ export const fontWeight = {
 
 export const breakpoints = {
   lg: "1140px",
-  md: "900px",
-  sm: "725px",
+  md: "960px",
+  sm: "800px",
 }
 
 

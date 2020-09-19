@@ -19,6 +19,12 @@ const RowContainer: React.FC = ({ children }) => {
         @media (max-width: ${breakpoints.md}) {
           grid-column-gap: 32px;
         }
+
+        @media (max-width: ${breakpoints.sm}) {
+          grid-template-columns: 1fr;
+          grid-template-rows: repeat(2, 1fr);
+          grid-row-gap: 24px;
+        }
       `}
     >
       {children}

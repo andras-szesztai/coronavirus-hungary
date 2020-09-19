@@ -2,7 +2,7 @@ import React from "react"
 
 import { css } from "@emotion/core"
 
-import { cardStyle } from "../../styles/styles"
+import { cardStyle, normalTextStyle } from "../../styles/styles"
 import { CardTitle } from "../titles"
 
 interface Props {
@@ -17,10 +17,13 @@ const BigCard = ({ title }: Props) => {
       `}
     >
       <CardTitle title={title} />
-      <div css={css`
+      <div
+        css={css`
+          display: grid;
+          grid-template-columns: 1fr max-content;
+        `}
+      >
 
-      `}>
-        
       </div>
     </div>
   )

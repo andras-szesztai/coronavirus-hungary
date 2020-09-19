@@ -1,6 +1,6 @@
 import { css } from "@emotion/core"
 
-import { breakpoints, colors } from "./theme"
+import { breakpoints, colors, fontSize, fontWeight } from "./theme"
 
 export const cardStyle = css`
   background-color: ${colors.light.primary};
@@ -23,3 +23,9 @@ export const cardStyle = css`
   }
 `
 
+
+export const normalTextStyle = css`
+  font-weight: ${fontWeight.md};
+
+  font-size: ${fontSize.xs};
+`

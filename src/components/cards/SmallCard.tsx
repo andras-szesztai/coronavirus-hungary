@@ -1,10 +1,10 @@
 import React from "react"
-
 import { css } from "@emotion/core"
 
-import { cardStyle } from "../../styles/styles"
+import { CardTitle, SimpleText } from "../titles"
+
+import { cardStyle, normalTextStyle } from "../../styles/styles"
 import { breakpoints } from "../../styles/theme"
-import { CardTitle } from "../titles"
 
 interface Props {
   title: string
@@ -16,18 +16,37 @@ const SmallCard = ({ title }: Props) => {
       css={css`
         ${cardStyle}
 
-        width: 440px;
-
-        @media (max-width: ${breakpoints.md}) {
-          width: 400px;
-        }
-
         @media (max-width: ${breakpoints.sm}) {
-          width: 360px;
+          width: 100%;
         }
       `}
     >
       <CardTitle title={title} />
+      <div
+        css={css`
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+        `}
+      >
+        <div
+          css={css`
+            display: grid;
+            grid-template-rows: repeat(5, 1fr);
+          `}
+        >
+          <div
+            css={css`
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+              ${normalTextStyle}
+            `}
+          >
+            <SimpleText text="Összesen"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

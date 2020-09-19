@@ -76,6 +76,10 @@ const App = () => {
             @media (max-width: ${breakpoints.md}) {
               grid-row-gap: 32px;
             }
+
+            @media (max-width: ${breakpoints.sm}) {
+              grid-row-gap: 24px;
+            }
           `}
         >
           <RowContainer>
