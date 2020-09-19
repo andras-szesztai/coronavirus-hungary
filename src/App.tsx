@@ -7,8 +7,10 @@ import {
   TitleContainer,
 } from "./components/containers"
 import { MainTitle } from "./components/titles"
+import { BigCard, SmallCard } from "./components/cards"
 
 import { colors, fontSize, fontWeight, breakpoints } from "./styles/theme"
+import RowContainer from "./components/containers/RowContainer"
 
 const normalTextStyle = css`
   font-weight: ${fontWeight.md};
@@ -20,18 +22,12 @@ const normalTextStyle = css`
   }
 `
 
-const cardStyle = css`
-  background-color: ${colors.light.primary};
-  border-radius: 8px;
-  padding: 16px 24px 24px 24px;
-`
-
 const App = () => {
   return (
     <MainContainer>
       <DashboardContainer>
         <TitleContainer>
-          <MainTitle/>
+          <MainTitle />
           <div
             css={css`
               display: grid;
@@ -66,43 +62,31 @@ const App = () => {
             </h3>
           </div>
         </TitleContainer>
-        {/* <div
+        <div
           css={css`
             place-self: stretch;
             display: grid;
             grid-template-rows: repeat(2, 1fr);
             grid-row-gap: 48px;
-            ${borderStyle}
+
+            @media (max-width: ${breakpoints.lg}) {
+              grid-row-gap: 40px;
+            }
+
+            @media (max-width: ${breakpoints.md}) {
+              grid-row-gap: 32px;
+            }
           `}
         >
-          <div
-            css={css`
-              display: grid;
-              grid-template-columns: 1fr max-content;
-              grid-column-gap: 48px;
-
-              @media (max-width: ${breakpoints.lg}) {
-                grid-column-gap: 40px;
-              }
-
-              @media (max-width: ${breakpoints.md}) {
-                grid-column-gap: 32px;
-              }
-            `}
-          >
-            <div
-              css={css`
-                ${cardStyle}
-              `}
-            />
-            <div
-              css={css`
-                ${cardStyle}
-                width: 400px;
-              `}
-            />
-          </div>
-        </div> */}
+          <RowContainer>
+            <BigCard title="First big card" />
+            <SmallCard title="First small card" />
+          </RowContainer>
+          <RowContainer>
+            <BigCard title="Second big card" />
+            <SmallCard title="Second small card" />
+          </RowContainer>
+        </div>
       </DashboardContainer>
     </MainContainer>
   )
