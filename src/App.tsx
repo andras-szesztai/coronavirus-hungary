@@ -1,6 +1,6 @@
 import React from "react"
 import { css } from "@emotion/core"
-import { meanBy } from "lodash"
+import { groupBy, last } from "lodash"
 
 import {
   DashboardContainer,
@@ -14,83 +14,45 @@ import {
 import { MainTitle, SimpleText } from "./components/titles"
 import { BigCard, SmallCard } from "./components/cards"
 
-import {
-  BIG_CARD_FIRST_COLUMN,
-  SMALL_CARD_FIRST_COLUMN,
-} from "./constants/firstColumns"
-import { useFetchData } from "./hooks"
+import { BIG_CARD_FIRST_COLUMN } from "./constants/firstColumns"
+import { useAvgAgeData, useFetchData } from "./hooks"
 
 import { colors, breakpoints } from "./styles/theme"
 import { normalTextStyle } from "./styles/styles"
-import { FormattedDataObject } from "./types/Data"
-import {
-  makeDateFiltered,
-  makeGenderFiltered,
-} from "./utils/calculationHelpers"
 import { Column } from "./types/Columns"
-
-interface Data {
-  datum: string
-  kor: string
-  nem: string
-  sorszam: string
-}
+import { makeRunningAvg } from "./utils/calculationHelpers"
+import { RunningAvg } from "./types/Data"
 
 const App = () => {
   const { data, maxDate, error } = useFetchData()
 
-  const [avgAgeData, setAvgAgeData] = React.useState({
-    isInit: false,
-    total: {
-      avgNow: 0,
-      avg7: 0,
-      avg30: 0,
-      avg90: 0,
-    },
-    female: {
-      avgNow: 0,
-      avg7: 0,
-      avg30: 0,
-      avg90: 0,
-    },
-    male: {
-      avgNow: 0,
-      avg7: 0,
-      avg30: 0,
-      avg90: 0,
-    },
-  })
+  const avgAgeColumns = useAvgAgeData(data, maxDate)
 
+  const [runningAvgData, setRunningAvgData] = React.useState([] as RunningAvg[])
+  const [runningAvgValues, setRunningAvgValues] = React.useState({
+    now: 0,
+    day1: 0,
+    day7: 0,
+    day30: 0,
+    day90: 0,
+  })
+  console.log("App -> runningAvgValues", runningAvgValues)
+  const isInit = React.useRef(true)
   React.useEffect(() => {
-    if (data.length && !avgAgeData.isInit) {
-      const fullData = data
-      const day7Data = makeDateFiltered(data, 7, maxDate)
-      const day30Data = makeDateFiltered(data, 30, maxDate)
-      const day90Data = makeDateFiltered(data, 90, maxDate)
-      const newAvgAgeData = {
-        isInit: true,
-        total: {
-          avgNow: +meanBy(fullData, "age").toFixed(1),
-          avg7: +meanBy(day7Data, "age").toFixed(1),
-          avg30: +meanBy(day30Data, "age").toFixed(1),
-          avg90: +meanBy(day90Data, "age").toFixed(1),
-        },
-        female: {
-          avgNow: +meanBy(makeGenderFiltered(fullData, "f"), "age").toFixed(1),
-          avg7: +meanBy(makeGenderFiltered(day7Data, "f"), "age").toFixed(1),
-          avg30: +meanBy(makeGenderFiltered(day30Data, "f"), "age").toFixed(1),
-          avg90: +meanBy(makeGenderFiltered(day90Data, "f"), "age").toFixed(1),
-        },
-        male: {
-          avgNow: +meanBy(makeGenderFiltered(fullData, "m"), "age").toFixed(1),
-          avg7: +meanBy(makeGenderFiltered(day7Data, "m"), "age").toFixed(1),
-          avg30: +meanBy(makeGenderFiltered(day30Data, "m"), "age").toFixed(1),
-          avg90: +meanBy(makeGenderFiltered(day90Data, "m"), "age").toFixed(1),
-        },
-      }
-      setAvgAgeData(newAvgAgeData)
+    if (isInit.current && data.length) {
+      isInit.current = false
+      const groupedFull = groupBy(data, "date")
+      const runningAvg = makeRunningAvg(groupedFull)
+      setRunningAvgValues({
+        now: last(runningAvg)?.value || 0,
+        day1: runningAvg[runningAvg.length - 2].value,
+        day7: 0,
+        day30: 0,
+        day90: 0,
+      })
+      setRunningAvgData(runningAvg)
     }
-  }, [avgAgeData, data, data.length, maxDate])
+  }, [data, data.length, runningAvgData])
 
   return (
     <MainContainer>
@@ -184,32 +146,12 @@ const App = () => {
           <ColumnContainer>
             <SmallCard title="Elhunytak átlagéletkora (év)">
               <TableContainer columns={4}>
-                {[
-                  { rows: SMALL_CARD_FIRST_COLUMN },
-                  {
-                    rows: [
-                      { text: "Összesen" },
-                      { text: avgAgeData.total.avgNow, withBorder: true },
-                      { text: avgAgeData.total.avg7 },
-                      { text: avgAgeData.total.avg30 },
-                      { text: avgAgeData.total.avg90 },
-                    ],
-                  },
-                  {
-                    rows: [
-                      { text: "Nõ" },
-                      { text: avgAgeData.female.avgNow, withBorder: true },
-                      { text: avgAgeData.female.avg7 },
-                      { text: avgAgeData.female.avg30 },
-                      { text: avgAgeData.female.avg90 },
-                    ],
-                  },
-                ].map((column: Column, i) => (
+                {avgAgeColumns.map((column: Column, i) => (
                   <TableColumnContainer key={i}>
                     {column.rows.map((row, rowIndex) => (
                       <TextContainer
                         key={rowIndex}
-                        justify={1}
+                        justify={row.justify}
                         text={row.text}
                         withBorder={row.withBorder}
                         background={row.background}

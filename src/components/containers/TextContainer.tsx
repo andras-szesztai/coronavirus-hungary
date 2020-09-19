@@ -27,7 +27,7 @@ const TextContainer = ({
 
         display: flex;
         align-items: center;
-        justify-content: ${justify ? "flex-end" : "flex-start"};
+        justify-content: ${justify ? "flex-start" : "flex-end"};
 
         background: ${background};
         border-radius: 4px;

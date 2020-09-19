@@ -11,3 +11,8 @@ export interface FormattedDataObject {
   gender: string
   number: number
 }
+
+export interface RunningAvg {
+    date: Date;
+    value: number;
+}

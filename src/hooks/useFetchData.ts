@@ -20,7 +20,7 @@ const useFetchData = () => {
         .then((res) => {
           const formattedData = res.data.data.map((d: DataObject)  => ({
             number: +d.sorszam,
-            date: moment(d.datum, "M/DD/YY").toDate(),
+            date: d.datum,
             age: +d.kor,
             gender: d.nem === "Férfi" ? "m" : "f"
           }))

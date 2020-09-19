@@ -10,8 +10,8 @@ export const BIG_CARD_FIRST_COLUMN = [
 
 export const SMALL_CARD_FIRST_COLUMN = [
   { text: "-", background: colors.light.primary },
-  { text: "Összesen" },
-  { text: "Elõzõ 7 nap" },
-  { text: "Elõzõ 30 nap" },
-  { text: "Elõzõ 90 nap" },
+  { text: "Összesen", justify: 1 },
+  { text: "Elõzõ 7 nap", justify: 1 },
+  { text: "Elõzõ 30 nap", justify: 1 },
+  { text: "Elõzõ 90 nap", justify: 1}
 ]

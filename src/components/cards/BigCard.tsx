@@ -54,7 +54,6 @@ const BigCard: React.FC<Props> = ({ columns, title }) => {
               {column.rows.map((row, rowIndex) => (
                 <TextContainer
                   key={rowIndex}
-                  justify={1}
                   text={row.text}
                   withBorder={row.withBorder}
                   background={row.background}
