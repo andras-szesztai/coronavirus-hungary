@@ -10,6 +10,7 @@ import { DATE_FORMAT } from '../constants/data'
 
 const useFetchData = () => {
   const [data, setData] = React.useState([] as FormattedDataObject[])
+  const [isLoading, setIsLoading] = React.useState(true)
   const [maxDate, setMaxDate] = React.useState({} as Date)
   const [error, setError] = React.useState("")
   const isInit = React.useRef(true)
@@ -29,11 +30,12 @@ const useFetchData = () => {
           const maxDate = last(data)
           setMaxDate(maxDate?.date || new Date())
           setData(dateSortedData)
+          setIsLoading(false)
         })
         .catch((err) => setError(err))
     }
-  })
-  return { data, maxDate, error }
+  }, [data])
+  return { data, maxDate, error, isLoading }
 
 }
 

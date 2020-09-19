@@ -6,27 +6,30 @@ import {
   TableContainer,
   TextContainer,
 } from "../containers"
-
-import { cardStyle } from "../../styles/styles"
 import { CardTitle } from "../titles"
-import { breakpoints, colors } from "../../styles/theme"
 import { Column } from "../../types/Columns"
 import AreaChart from "../charts/AreaChart"
+import LoadingAnimation from "./Loader"
+
 import { RunningAvg } from "../../types/Data"
 
+import { breakpoints, colors } from "../../styles/theme"
+import { cardStyle } from "../../styles/styles"
 interface Props {
   title: string
   columns: Column[]
   chartData: RunningAvg[]
+  isLoading: boolean
 }
 
-const BigCard: React.FC<Props> = ({ columns, title, chartData }) => {
+const BigCard: React.FC<Props> = ({ columns, title, chartData, isLoading }) => {
   return (
     <div
       css={css`
         ${cardStyle}
       `}
     >
+      <LoadingAnimation isLoading={isLoading} />
       <CardTitle title={title} />
       <div
         css={css`
@@ -55,7 +58,7 @@ const BigCard: React.FC<Props> = ({ columns, title, chartData }) => {
             position: relative;
           `}
         >
-          <AreaChart data={chartData}/>
+          <AreaChart data={chartData} />
         </div>
         <TableContainer columns={2}>
           {columns.map((column, i) => (

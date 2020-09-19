@@ -92,7 +92,7 @@ function AreaChart({ data }) {
         <path
           d={path}
           fill={colors.dark.primary}
-          fillOpacity={0.9}
+          fillOpacity={0.8}
         />
         <g
           ref={axisRef}

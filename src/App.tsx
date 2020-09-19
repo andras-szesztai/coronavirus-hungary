@@ -1,7 +1,6 @@
 import React from "react"
 import { css } from "@emotion/core"
 import moment from "moment"
-import { format } from "d3-format"
 
 import {
   DashboardContainer,
@@ -32,10 +31,10 @@ import { normalTextStyle } from "./styles/styles"
 import { Column } from "./types/Columns"
 
 const App = () => {
-  const { data, maxDate, error } = useFetchData()
+  const { data, maxDate, error, isLoading } = useFetchData()
 
   const avgAgeColumns = useAvgAgeData(data, maxDate)
-  const RatioColumns = useGenderRatioData(data, maxDate)
+  const ratioRows = useGenderRatioData(data, maxDate)
   const { runningAvgData, runningAvgRows } = useRunningAvgData(data)
   const { runningTotalData, runningTotalRows } = useRunningTotalData(data)
 
@@ -117,6 +116,7 @@ const App = () => {
                 },
               ]}
               chartData={runningAvgData}
+              isLoading={isLoading}
             />
             <BigCard
               title="Elhunytak száma összesen március 20. óta (kumulatív) "
@@ -129,10 +129,11 @@ const App = () => {
                 },
               ]}
               chartData={runningTotalData}
+              isLoading={isLoading}
             />
           </ColumnContainer>
           <ColumnContainer>
-            <SmallCard title="Elhunytak átlagéletkora">
+            <SmallCard isLoading={isLoading} title="Elhunytak átlagéletkora">
               <TableContainer columns={4}>
                 {avgAgeColumns.map((column: Column, i) => (
                   <TableColumnContainer key={i}>
@@ -150,7 +151,10 @@ const App = () => {
                 ))}
               </TableContainer>
             </SmallCard>
-            <SmallCard title="Nemek százalékos megoszlása">
+            <SmallCard
+              isLoading={isLoading}
+              title="Nemek százalékos megoszlása"
+            >
               <div
                 css={css`
                   display: grid;
@@ -193,40 +197,41 @@ const App = () => {
                     <TextContainer text="Nõ" />
                     <TextContainer text="Férfi" />
                   </div>
-                  <div
-                    css={css`
-                      display: flex;
-                      justify-content: space-between;
-                      position: relative;
-                    `}
-                  >
-                    <div
-                      css={css`
-                        width: 40.5%;
-                      `}
-                    >
-                      <TextContainer
-                        text="40.5%"
-                        background={colors.dark.primary}
-                        textColor={colors.light.primary}
-                        justify={1}
-                      />
-                    </div>
-                    <div
-                      css={css`
-                        width: 59.5%;
-                      `}
-                    >
-                      <TextContainer
-                        text="59.5%"
-                        background={colors.dark.primary}
-                        textColor={colors.light.primary}
-                      />
-                    </div>
-                  </div>
-                  <TextContainer text="15.6%" />
-                  <TextContainer text="hello" />
-                  <TextContainer text="hello" />
+                  {ratioRows.map((row) => {
+                    return (
+                      <div
+                        css={css`
+                          display: flex;
+                          justify-content: space-between;
+                          position: relative;
+                        `}
+                      >
+                        <div
+                          css={css`
+                            width: ${row.female}%;
+                          `}
+                        >
+                          <TextContainer
+                            text={`${row.female}%`}
+                            background={colors.dark.primary}
+                            textColor={colors.light.primary}
+                            justify={1}
+                          />
+                        </div>
+                        <div
+                          css={css`
+                            width: ${row.male}%;
+                          `}
+                        >
+                          <TextContainer
+                            text={`${row.male}%`}
+                            background={colors.dark.primary}
+                            textColor={colors.light.primary}
+                          />
+                        </div>
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
             </SmallCard>

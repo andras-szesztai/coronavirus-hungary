@@ -3,6 +3,7 @@ import { css } from "@emotion/core"
 import { breakpoints, colors, fontSize, fontWeight } from "./theme"
 
 export const cardStyle = css`
+  position: relative;
   background-color: ${colors.light.primary};
   border-radius: 8px;
   padding: 16px;

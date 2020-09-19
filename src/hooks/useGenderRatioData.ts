@@ -1,6 +1,5 @@
 import React from 'react'
-
-import { SMALL_CARD_FIRST_COLUMN } from '../constants/firstColumns'
+import { round } from "lodash"
 
 import { FormattedDataObject } from '../types/Data'
 import { makeDateFiltered, makeGenderFiltered } from '../utils/calculationHelpers'
@@ -21,7 +20,6 @@ function useGenderRatioData(data: FormattedDataObject[], maxDate: Date) {
      ratio90: 0,
     },
   })
-  console.log("useGenderRatioData -> ratioData", ratioData)
 
   React.useEffect(() => {
     if (data.length && !ratioData.isInit) {
@@ -32,51 +30,34 @@ function useGenderRatioData(data: FormattedDataObject[], maxDate: Date) {
       const newRatioData = {
         isInit: true,
         female: {
-          ratioNow: makeGenderFiltered(fullData, "f").length/fullData.length,
-          ratio7: makeGenderFiltered(day7Data, "f").length/day7Data.length,
-          ratio30: makeGenderFiltered(day30Data, "f").length/day30Data.length,
-          ratio90: makeGenderFiltered(day90Data, "f").length/day90Data.length,
+          ratioNow: round(makeGenderFiltered(fullData, "f").length/fullData.length * 100, 1),
+          ratio7: round(makeGenderFiltered(day7Data, "f").length/day7Data.length * 100, 1),
+          ratio30: round(makeGenderFiltered(day30Data, "f").length/day30Data.length * 100, 1),
+          ratio90: round(makeGenderFiltered(day90Data, "f").length/day90Data.length * 100, 1),
         },
         male: {
-          ratioNow: makeGenderFiltered(fullData, "m").length/fullData.length,
-          ratio7: makeGenderFiltered(day7Data, "m").length/day7Data.length,
-          ratio30: makeGenderFiltered(day30Data, "m").length/day30Data.length,
-          ratio90: makeGenderFiltered(day90Data, "m").length/day90Data.length,
+          ratioNow: round(makeGenderFiltered(fullData, "m").length/fullData.length * 100, 1),
+          ratio7: round(makeGenderFiltered(day7Data, "m").length/day7Data.length * 100, 1),
+          ratio30: round(makeGenderFiltered(day30Data, "m").length/day30Data.length * 100, 1),
+          ratio90: round(makeGenderFiltered(day90Data, "m").length/day90Data.length * 100, 1),
         },
       }
       setRatioData(newRatioData)
     }
   }, [data, maxDate, ratioData.isInit])
 
-  return [
-    { rows: SMALL_CARD_FIRST_COLUMN },
-    // {
-    //   rows: [
-    //     { text: "Összesen" },
-    //     { text: `${avgAgeData.total.avgNow} év`, withBorder: true },
-    //     { text: `${avgAgeData.total.avg7} év` },
-    //     { text: `${avgAgeData.total.avg30} év` },
-    //     { text: `${avgAgeData.total.avg90} év` },
-    //   ],
-    // },
-    // {
-    //   rows: [
-    //     { text: "Nõ" },
-    //     { text: `${avgAgeData.female.avgNow} év`, withBorder: true },
-    //     { text: `${avgAgeData.female.avg7} év` },
-    //     { text: `${avgAgeData.female.avg30} év` },
-    //     { text: `${avgAgeData.female.avg90} év` },
-    //   ],
-    // },
-    // {
-    //   rows: [
-    //     { text: "Férfi" },
-    //     { text: `${avgAgeData.male.avgNow} év`, withBorder: true },
-    //     { text: `${avgAgeData.male.avg7} év` },
-    //     { text: `${avgAgeData.male.avg30} év` },
-    //     { text: `${avgAgeData.male.avg90} év` },
-    //   ],
-    // },
+  return [ {
+    female: ratioData.female.ratioNow, male:ratioData.male.ratioNow
+  },
+  {
+    female: ratioData.female.ratio7, male:ratioData.male.ratio7
+  },
+  {
+    female: ratioData.female.ratio30, male:ratioData.male.ratio30
+  },
+  {
+    female: ratioData.female.ratio90, male:ratioData.male.ratio90
+  }
   ]
 }
 

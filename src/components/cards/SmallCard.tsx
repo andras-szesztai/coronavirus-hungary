@@ -5,13 +5,15 @@ import { CardTitle } from "../titles"
 
 import { cardStyle } from "../../styles/styles"
 import { breakpoints } from "../../styles/theme"
+import LoadingAnimation from "./Loader"
 
 interface Props {
   title: string
   withMargin?: boolean
+  isLoading: boolean
 }
 
-const SmallCard: React.FC<Props> = ({ title, children }) => {
+const SmallCard: React.FC<Props> = ({ title, children, isLoading }) => {
   return (
     <div
       css={css`
@@ -22,6 +24,7 @@ const SmallCard: React.FC<Props> = ({ title, children }) => {
         }
       `}
     >
+      <LoadingAnimation isLoading={isLoading} />
       <CardTitle title={title} />
       {children}
     </div>
