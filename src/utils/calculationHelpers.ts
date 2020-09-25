@@ -6,7 +6,7 @@ import { DATE_FORMAT } from "../constants/data"
 import { colors } from "../styles/theme"
 
 export const  makeDateFiltered = (data: FormattedDataObject[], days: number, maxDate: Date) => {
-  const limitDate = moment(maxDate).subtract("days", days).toDate()
+  const limitDate = moment(maxDate).subtract(days, "days").toDate()
   return data.filter((d) => moment(d.date, DATE_FORMAT).toDate() >= limitDate)
 }
 
@@ -37,16 +37,10 @@ export function makeRunningAvg(dateGrouped:  Dictionary<FormattedDataObject[]>) 
     num: dateGrouped[date] ? dateGrouped[date].length : 0,
   }))
   const movingAvg = enrichedAllDates.map((date, i) => {
-    if (
-      moment(date, DATE_FORMAT).toDate() <
-      moment("3/26/20", DATE_FORMAT).toDate()
-    ) {
-      return { date: moment(date, DATE_FORMAT).toDate(), value: 0 }
-    }
     const value = meanBy(enrichedDateGroupped.slice(i - 6, i), "num")
     return {
       date: moment(date, DATE_FORMAT).toDate(),
-      value,
+      value: value || 0,
     }
   })
   return movingAvg

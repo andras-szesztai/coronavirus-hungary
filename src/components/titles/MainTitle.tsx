@@ -16,10 +16,12 @@ const MainTitle = () => {
 
         @media (max-width: ${breakpoints.lg}) {
           font-size: ${fontSize.xxl.secondary};
+          font-weight: ${fontWeight.sm};
         }
 
         @media (max-width: ${breakpoints.md}) {
           font-size: ${fontSize.xxl.tertiary};
+          font-weight: ${fontWeight.sm};
         }
       `}
     >

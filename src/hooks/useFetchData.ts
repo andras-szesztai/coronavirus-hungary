@@ -20,7 +20,7 @@ const useFetchData = () => {
       axios
         .get(URL)
         .then((res) => {
-          const formattedData = res.data.data.map((d: DataObject)  => ({
+          const formattedData = res.data.map((d: DataObject)  => ({
             number: +d.sorszam,
             date: moment(d.datum, DATE_FORMAT).format(DATE_FORMAT),
             age: +d.kor,
