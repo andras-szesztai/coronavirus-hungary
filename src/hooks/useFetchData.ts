@@ -20,15 +20,15 @@ const useFetchData = () => {
       axios
         .get(URL)
         .then((res) => {
-          const formattedData = res.data.map((d: DataObject)  => ({
+          const formattedData: FormattedDataObject[] = res.data.map((d: DataObject)  => ({
             number: +d.sorszam,
             date: moment(d.datum, DATE_FORMAT).format(DATE_FORMAT),
             age: +d.kor,
             gender: d.nem === "Férfi" ? "m" : "f"
           }))
           const dateSortedData = formattedData.sort((a : FormattedDataObject, b: FormattedDataObject) => a.number - b.number)
-          const maxDate = last(data)
-          setMaxDate(maxDate?.date || new Date())
+          const newMaxDate = last(dateSortedData)
+          setMaxDate(newMaxDate?.date as Date)
           setData(dateSortedData)
           setIsLoading(false)
         })
